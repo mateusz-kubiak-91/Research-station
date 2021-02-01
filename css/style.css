@@ -10,6 +10,73 @@ body {
 }
 
 @media (min-width: 770px) {
+    .welcome {
+        min-height: calc(100vh - 30px);
+        display: grid;
+        grid-template-columns: 10% 1fr 10%;
+        grid-template-rows: repeat(2, 1fr) 10px;
+        font-size: 2.4rem;
+        line-height: 10rem;
+    }
+
+    .startBtn {
+        font-size: 2.4rem;
+        width: 30%;
+    }
+}
+
+@media (max-width: 769px) {
+    .welcome {
+        min-height: calc(100vh - 30px);
+        display: grid;
+        grid-template-columns: 10% 1fr 10%;
+        grid-template-rows: repeat(2, 1fr) 10px;
+        font-size: 2rem;
+        line-height: 6rem;
+    }
+
+    .startBtn {
+        font-size: 2.4rem;
+        width: 40%;
+    }
+}
+
+@media (max-width: 415px) {
+    .welcome {
+        min-height: calc(100vh - 30px);
+        display: grid;
+        grid-template-columns: 10% 1fr 10%;
+        grid-template-rows: repeat(2, 1fr) 10px;
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+
+    .startBtn {
+        font-size: 1.2rem;
+        width: 40%;
+    }
+}
+
+.wlcomeParagraf {
+    grid-column: 2;
+    text-align: center;
+}
+
+.startBtn {
+    grid-column: 2;
+    text-align: center;
+    margin: 0px auto;
+    height: 50px;
+    border: 2px solid black;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+
+.container {
+    display: none;
+}
+
+@media (min-width: 770px) {
     .game {
         min-height: calc(100vh - 30px);
         display: grid;
@@ -134,7 +201,8 @@ body {
     position: relative;
 }
 
-.questionToPlayer, .pictureNPC {
+.questionToPlayer,
+.pictureNPC {
     margin: 0;
     position: absolute;
     top: 50%;
