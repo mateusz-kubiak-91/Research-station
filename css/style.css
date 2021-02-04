@@ -8,7 +8,7 @@ html {
 body {
     background-color: rgb(163, 173, 230);
 }
-
+/* 
 @media (min-width: 770px) {
     .welcome {
         min-height: calc(100vh - 30px);
@@ -70,10 +70,10 @@ body {
     border: 2px solid black;
     text-transform: capitalize;
     border-radius: 10px;
-}
+} */
 
 .container {
-    display: none;
+    display: grid; /* none */
 }
 
 @media (min-width: 770px) {
