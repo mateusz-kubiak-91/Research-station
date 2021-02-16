@@ -3,6 +3,9 @@ const noBtn = document.querySelector('.noBtn');
 const startBtn = document.querySelector('.startBtn');
 const pictureNPC = document.querySelector('.pictureNPC');
 const questionToPlayer = document.querySelector('.questionToPlayer');
+const goldClass = document.getElementById("finance");
+const greenClass = document.getElementById("morale");
+const blueClass = document.getElementById("research");
 
 let welcomDisplay = document.querySelector('div.welcome')
 let containerDisplay = document.querySelector('div.container')
@@ -184,7 +187,7 @@ yesBtn.addEventListener('click', () => {
 
     pictureNPC.textContent = randomTable()[0];
     questionToPlayer.textContent = randomTable()[1];
-
+    
     // warunek dodający wartości na paskach
     if (financeBar.style.width.length == 3) {
         financeBar.style.width = `${parseInt(financeBar.style.width.slice(-3,2)) + (randomTable()[2])}%`
@@ -205,8 +208,26 @@ yesBtn.addEventListener('click', () => {
     }
 
     // warunek zagrorzenia
-    if (parseInt(financeBar.style.width.slice(-2,1)) && parseInt(financeBar.style.width.slice(-2,1)) && parseInt(researchBar.style.width.slice(-2,1)) >= 9) {
-        
+    if (parseInt(financeBar.style.width.slice(-2,1)) <= 20 || parseInt(financeBar.style.width.slice(-3,2)) >= 80) {
+        goldClass.classList.remove("gold");
+        goldClass.classList.add("red");    
+    } else {
+        goldClass.classList.remove("red");
+        goldClass.classList.add("gold");    
+    }
+    if (parseInt(moraleBar.style.width.slice(-2,1)) <= 20 || parseInt(moraleBar.style.width.slice(-3,2)) >= 80) {
+        greenClass.classList.remove("green");
+        greenClass.classList.add("red");
+    } else {
+        greenClass.classList.remove("red");
+        greenClass.classList.add("green");    
+    }
+    if (parseInt(researchBar.style.width.slice(-2,1)) <= 20) {
+        blueClass.classList.remove("blue");
+        blueClass.classList.add("red");
+    } else {
+        blueClass.classList.remove("red");
+        blueClass.classList.add("blue");    
     }
 
     // warunek przegranej
