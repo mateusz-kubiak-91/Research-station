@@ -195,6 +195,10 @@ body {
     position: relative;
 }
 
+.questionToPlayer {
+    padding: 10%;
+}
+
 .questionBar {
     grid-column: 1/span 3;
     grid-row: 4/span 1;

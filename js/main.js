@@ -1,10 +1,12 @@
 const yesBtn = document.querySelector('.yesBtn');
 const noBtn = document.querySelector('.noBtn');
 const startBtn = document.querySelector('.startBtn');
+const pictureNPC = document.querySelector('.pictureNPC');
+const questionToPlayer = document.querySelector('.questionToPlayer');
 
 let welcomDisplay = document.querySelector('div.welcome')
 let containerDisplay = document.querySelector('div.container')
-let financeBar = document.querySelector('.financeBar'); // financeBar.style.width = "20%"
+let financeBar = document.querySelector('.financeBar'); 
 let moraleBar = document.querySelector('.moraleBar');
 let researchBar = document.querySelector('.researchBar');
 
@@ -150,14 +152,69 @@ const npcTable = [
         moraleNo: -10, 
         progresNo: 0}]}];
 
-let randomChoise = npcTable[Math.floor(Math.random() * npcTable.length)];
-let npc = randomChoise.npc;
-let table = randomChoise.table;
-let question = table[Math.floor(Math.random() * table.length)].context;    
+const randomTable = function() {
+    let randomChoise = npcTable[Math.floor(Math.random() * npcTable.length)];
+    let table = randomChoise.table;
+    let npc = randomChoise.npc;
+    let question = table[Math.floor(Math.random() * table.length)].context;    
+    let financeYes = table[Math.floor(Math.random() * table.length)].financeYes;    
+    let moraleYes = table[Math.floor(Math.random() * table.length)].moraleYes;    
+    let progresYes = table[Math.floor(Math.random() * table.length)].progresYes;    
+    let financeNo = table[Math.floor(Math.random() * table.length)].financeNo;    
+    let moraleNo = table[Math.floor(Math.random() * table.length)].moraleNo;    
+    let progresNo = table[Math.floor(Math.random() * table.length)].progresNo;  
 
+    return [npc, question, financeYes, moraleYes, progresYes, financeNo, moraleNo, progresNo]
+}
+      
+    pictureNPC.textContent = randomTable()[0];
+    questionToPlayer.textContent = randomTable()[1];
 
-
+    
 // startBtn.addEventListener('click', () => {
 //     welcomDisplay.style.display = 'none'
 //     containerDisplay.style.display = 'grid'
+//     randomTable()
+//     pictureNPC.textContent = randomTable()[0];
+//     questionToPlayer.textContent = randomTable()[1];
 // });
+
+yesBtn.addEventListener('click', () => {
+    randomTable();
+
+    pictureNPC.textContent = randomTable()[0];
+    questionToPlayer.textContent = randomTable()[1];
+
+    // warunek dodający wartości na paskach
+    if (financeBar.style.width.length == 3) {
+        financeBar.style.width = `${parseInt(financeBar.style.width.slice(-3,2)) + (randomTable()[2])}%`
+    } else {
+        financeBar.style.width = `${parseInt(financeBar.style.width.slice(-2,1)) + (randomTable()[2])}%`
+    }
+
+    if (moraleBar.style.width.length == 3) {
+        moraleBar.style.width = `${parseInt(moraleBar.style.width.slice(-3,2)) + (randomTable()[3])}%`
+    } else {
+        moraleBar.style.width = `${parseInt(moraleBar.style.width.slice(-2,1)) + (randomTable()[3])}%`
+    }
+
+    if (researchBar.style.width.length == 3) {
+        researchBar.style.width = `${parseInt(researchBar.style.width.slice(-3,2)) + (randomTable()[4])}%`
+    } else {
+        researchBar.style.width = `${parseInt(researchBar.style.width.slice(-2,1)) + (randomTable()[4])}%`
+    }
+
+    // warunek zagrorzenia
+    if (parseInt(financeBar.style.width.slice(-2,1)) && parseInt(financeBar.style.width.slice(-2,1)) && parseInt(researchBar.style.width.slice(-2,1)) >= 9) {
+        
+    }
+
+    // warunek przegranej
+
+
+    // warunek zwycięstwa
+});
+
+noBtn.addEventListener('click', () => {
+
+});
