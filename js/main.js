@@ -44,14 +44,14 @@ const npcTable = [
         moraleNo: -20, 
         progresNo: -40}]},  
     {npc: "Szef ochrony", table: [
-        {context: "Znaleźliśmy przerwane ogroszenie od wschodu stacji badawczej. Czy mam zwiększyć ochronę?", 
+        {context: "Znaleźliśmy przerwane ogrodzenie od wschodu stacji badawczej. Czy mam zwiększyć ochronę?", 
         financeYes: -5, 
         moraleYes: 10, 
         progresYes: 0, 
         financeNo: 0, 
         moraleNo: -5, 
         progresNo: 0},
-        {context: "Jeden z pracowników poinformował mnie że kto stoi za drobnymi kradzieżami w naszej placówce. Czy mam się tym zająć?", 
+        {context: "Jeden z pracowników poinformował mnie że wie kto stoi za drobnymi kradzieżami w naszej placówce. Czy mam się tym zająć?", 
         financeYes: 0, 
         moraleYes: 15, 
         progresYes: 0, 
@@ -155,80 +155,88 @@ const npcTable = [
         moraleNo: -10, 
         progresNo: 0}]}];
 
-const randomTable = function() {
-    let randomChoise = npcTable[Math.floor(Math.random() * npcTable.length)];
-    let table = randomChoise.table;
-    let npc = randomChoise.npc;
-    let question = table[Math.floor(Math.random() * table.length)].context;    
-    let financeYes = table[Math.floor(Math.random() * table.length)].financeYes;    
-    let moraleYes = table[Math.floor(Math.random() * table.length)].moraleYes;    
-    let progresYes = table[Math.floor(Math.random() * table.length)].progresYes;    
-    let financeNo = table[Math.floor(Math.random() * table.length)].financeNo;    
-    let moraleNo = table[Math.floor(Math.random() * table.length)].moraleNo;    
-    let progresNo = table[Math.floor(Math.random() * table.length)].progresNo;  
 
-    return [npc, question, financeYes, moraleYes, progresYes, financeNo, moraleNo, progresNo]
-}
-      
-    pictureNPC.textContent = randomTable()[0];
-    questionToPlayer.textContent = randomTable()[1];
-
+const randomTable = () => {
+    const randomChoise = npcTable[Math.floor(Math.random() * npcTable.length)];
+    const table = randomChoise.table;
+    const npc = randomChoise.npc;
+    const randomSituation = table[Math.floor(Math.random() * table.length)];
+    const question = randomSituation.context;    
+    const financeYes = randomSituation.financeYes;    
+    const moraleYes = randomSituation.moraleYes;    
+    const progresYes = randomSituation.progresYes;    
+    const financeNo = randomSituation.financeNo;    
+    const moraleNo = randomSituation.moraleNo;    
+    const progresNo = randomSituation.progresNo;  
     
+    pictureNPC.textContent = npc;
+    questionToPlayer.textContent = question;
+    
+    return [npc, question, financeYes, moraleYes, progresYes, financeNo, moraleNo, progresNo];
+}
+
+function changeBar(htmlObject, result) {
+    if (htmlObject.style.width.length === 3) {
+        htmlObject.style.width = `${parseInt(htmlObject.style.width.slice(-3,2)) + (result)}%`
+    } else {
+        htmlObject.style.width = `${parseInt(htmlObject.style.width.slice(-2,1)) + (result)}%`
+    }
+}
+
+function lowerRiskBar(htmlObject, colorClass, baseColor, riskColor) {
+    if (htmlObject.style.width.length === 3) {
+        if (parseInt(htmlObject.style.width.slice(-3,2)) <= 20) {
+            colorClass.classList.remove(`${baseColor}`);
+            colorClass.classList.add(`${riskColor}`);    
+        } else {
+            colorClass.classList.remove(`${riskColor}`);
+            colorClass.classList.add(`${baseColor}`);    
+        }
+    } else if (htmlObject.style.width.length === 2) {
+        if (parseInt(htmlObject.style.width.slice(-2,1)) <= 20) {
+            colorClass.classList.remove(`${baseColor}`);
+            colorClass.classList.add(`${riskColor}`);     
+        } else {
+            colorClass.classList.remove(`${riskColor}`);
+            colorClass.classList.add(`${baseColor}`);   
+        }
+    }
+}
+
+function hightRiskBar(htmlObject, colorClass, baseColor, riskColor) {
+    if (htmlObject.style.width.length === 3) {
+        if (parseInt(htmlObject.style.width.slice(-3,2)) >= 80) {
+            colorClass.classList.remove(`${baseColor}`);
+            colorClass.classList.add(`${riskColor}`);    
+        } else {
+            colorClass.classList.remove(`${riskColor}`);
+            colorClass.classList.add(`${baseColor}`);     
+        }
+    } 
+}
+
 // startBtn.addEventListener('click', () => {
 //     welcomDisplay.style.display = 'none'
 //     containerDisplay.style.display = 'grid'
-//     randomTable()
-//     pictureNPC.textContent = randomTable()[0];
-//     questionToPlayer.textContent = randomTable()[1];
+//     const result = randomTable()
+//     pictureNPC.textContent = result[0];
+//     questionToPlayer.textContent = result[1];
 // });
 
 yesBtn.addEventListener('click', () => {
-    randomTable();
 
-    pictureNPC.textContent = randomTable()[0];
-    questionToPlayer.textContent = randomTable()[1];
-    
-    // warunek dodający wartości na paskach
-    if (financeBar.style.width.length == 3) {
-        financeBar.style.width = `${parseInt(financeBar.style.width.slice(-3,2)) + (randomTable()[2])}%`
-    } else {
-        financeBar.style.width = `${parseInt(financeBar.style.width.slice(-2,1)) + (randomTable()[2])}%`
-    }
+    const result = randomTable();
 
-    if (moraleBar.style.width.length == 3) {
-        moraleBar.style.width = `${parseInt(moraleBar.style.width.slice(-3,2)) + (randomTable()[3])}%`
-    } else {
-        moraleBar.style.width = `${parseInt(moraleBar.style.width.slice(-2,1)) + (randomTable()[3])}%`
-    }
+    changeBar(financeBar, result[2]);
+    changeBar(moraleBar, result[3]);
+    changeBar(researchBar, result[4]);
 
-    if (researchBar.style.width.length == 3) {
-        researchBar.style.width = `${parseInt(researchBar.style.width.slice(-3,2)) + (randomTable()[4])}%`
-    } else {
-        researchBar.style.width = `${parseInt(researchBar.style.width.slice(-2,1)) + (randomTable()[4])}%`
-    }
+    lowerRiskBar(financeBar, goldClass, "gold", "red");
+    lowerRiskBar(moraleBar, greenClass, "green", "red");
+    lowerRiskBar(researchBar, blueClass, "blue", "red");
 
-    // warunek zagrorzenia
-    if (parseInt(financeBar.style.width.slice(-2,1)) <= 20 || parseInt(financeBar.style.width.slice(-3,2)) >= 80) {
-        goldClass.classList.remove("gold");
-        goldClass.classList.add("red");    
-    } else {
-        goldClass.classList.remove("red");
-        goldClass.classList.add("gold");    
-    }
-    if (parseInt(moraleBar.style.width.slice(-2,1)) <= 20 || parseInt(moraleBar.style.width.slice(-3,2)) >= 80) {
-        greenClass.classList.remove("green");
-        greenClass.classList.add("red");
-    } else {
-        greenClass.classList.remove("red");
-        greenClass.classList.add("green");    
-    }
-    if (parseInt(researchBar.style.width.slice(-2,1)) <= 20) {
-        blueClass.classList.remove("blue");
-        blueClass.classList.add("red");
-    } else {
-        blueClass.classList.remove("red");
-        blueClass.classList.add("blue");    
-    }
+    hightRiskBar(financeBar, goldClass, "gold", "red");
+    hightRiskBar(moraleBar, greenClass, "green", "red");
 
     // warunek przegranej
 
@@ -238,4 +246,21 @@ yesBtn.addEventListener('click', () => {
 
 noBtn.addEventListener('click', () => {
 
+    const result = randomTable();
+
+    changeBar(financeBar, result[5]);
+    changeBar(moraleBar, result[6]);
+    changeBar(researchBar, result[7]);
+
+    lowerRiskBar(financeBar, goldClass, "gold", "red");
+    lowerRiskBar(moraleBar, greenClass, "green", "red");
+    lowerRiskBar(researchBar, blueClass, "blue", "red");
+
+    hightRiskBar(financeBar, goldClass, "gold", "red");
+    hightRiskBar(moraleBar, greenClass, "green", "red");
+
+    // warunek przegranej
+
+
+    // warunek zwycięstwa
 });
