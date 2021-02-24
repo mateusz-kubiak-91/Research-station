@@ -211,6 +211,14 @@ const npcTable = [{
     }
 ];
 
+const winLoseObject = {
+    financeToLow: "Zarządzanie finansami nie jest Twoją mocną stroną, co? Dowiedza się o tym pracownicy którzy nie dostaną pieniędzy i przyjdą po ciebie. Ale to zarząd cie wykończy. Jesteś skończony.",
+    financeToHight: "Rozumiem że jesteś dusigroszem, szanuje to. Jednak projekt stoi w miejscu a nie na tym nam zależało. Ktoś inny zajmei twoje miejsce. Jesteś skończony.",
+    moraleToLow: "Załoga zbuntowałla się. Część odeszła bezpowrotnie a inni przyszli cię odwiedzić. Wywieźli Cię na taczce wprost na składowisko odpadów. Jesteś skończony.",
+    moraleToHight: "Zarząd widzac twój brak umiejętności przywódczych  oraz brak progresu w projekcie postanowił odsunac Cię od projektu. Jesteś skończony.",
+    progressToLow: "Przez twoje zaniedbanie projekt poniósł klęskę. Jesteś skończony.",
+    progressToHight: "Założenia projektowe zostały zrealizowane. Pora uratować ludzkość. Będziesz nam przy tym potrzebny. Ale o tym pogadamy innym razem…"
+};
 
 const randomTable = () => {
     const randomChoise = npcTable[Math.floor(Math.random() * npcTable.length)];
@@ -255,6 +263,14 @@ function hightRiskBar(htmlObject, baseColor, riskColor) {
     }
 }
 
+function gameOver(valueBar, value, message) {
+    if (valueBar.value <= value) {
+        questionToPlayer.textContent = message;
+    } else if (valueBar.value >= value) {
+        questionToPlayer.textContent = message;
+    }
+}
+
 // startBtn.addEventListener('click', () => {
 //     welcomDisplay.style.display = 'none'
 //     containerDisplay.style.display = 'grid'
@@ -278,10 +294,12 @@ yesBtn.addEventListener('click', () => {
     hightRiskBar(financeBar, "gold", "red");
     hightRiskBar(moraleBar, "green", "red");
 
-    // warunek przegranej
-
-
-    // warunek zwycięstwa
+    gameOver(financeBar, 0, winLoseObject.financeToLow)
+    gameOver(financeBar, 100, winLoseObject.financeToHight)
+    gameOver(moraleBar, 0, winLoseObject.moraleToLow)
+    gameOver(moraleBar, 100, winLoseObject.moraleToHight)
+    gameOver(researchBar, 0, winLoseObject.progressToLow)
+    gameOver(researchBar, 100, winLoseObject.progressToHight)
 });
 
 noBtn.addEventListener('click', () => {
@@ -299,8 +317,10 @@ noBtn.addEventListener('click', () => {
     hightRiskBar(financeBar, "gold", "red");
     hightRiskBar(moraleBar, "green", "red");
 
-    // warunek przegranej
-
-
-    // warunek zwycięstwa
+    gameOver(financeBar, 0, winLoseObject.financeToLow)
+    gameOver(financeBar, 100, winLoseObject.financeToHight)
+    gameOver(moraleBar, 0, winLoseObject.moraleToLow)
+    gameOver(moraleBar, 100, winLoseObject.moraleToHight)
+    gameOver(researchBar, 0, winLoseObject.progressToLow)
+    gameOver(researchBar, 100, winLoseObject.progressToHight)
 });
