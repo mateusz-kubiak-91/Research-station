@@ -222,8 +222,7 @@ const winLoseObject = {
 
 const randomTable = () => {
     const randomChoise = npcTable[Math.floor(Math.random() * npcTable.length)];
-    const table = randomChoise.table;
-    const npc = randomChoise.npc;
+    const { table, npc } = randomChoise;
     const randomSituation = table[Math.floor(Math.random() * table.length)];
     const question = randomSituation.context;
     const financeYes = randomSituation.financeYes;
@@ -264,10 +263,21 @@ function hightRiskBar(htmlObject, baseColor, riskColor) {
 }
 
 function gameOver(valueBar, value, message) {
+    
     if (valueBar.value <= value) {
+        console.log('1. valueBar.value: ' + valueBar.value + ' limit: ' + value + 'setting msg: ' + message);
         questionToPlayer.textContent = message;
     } else if (valueBar.value >= value) {
         questionToPlayer.textContent = message;
+    }
+}
+
+function gameOver2({value}, messageLow, messageHigh) {
+    if (value <= 0) {
+        questionToPlayer.textContent = messageLow;
+    }
+    if (value >= 100) {
+        questionToPlayer.textContent = messageHigh;
     }
 }
 
@@ -283,23 +293,14 @@ yesBtn.addEventListener('click', () => {
 
     const result = randomTable();
 
+    
+
     changeBar(financeBar, result[2]);
     changeBar(moraleBar, result[3]);
     changeBar(researchBar, result[4]);
 
-    lowerRiskBar(financeBar, "gold", "red");
-    lowerRiskBar(moraleBar, "green", "red");
-    lowerRiskBar(researchBar, "blue", "red");
-
-    hightRiskBar(financeBar, "gold", "red");
-    hightRiskBar(moraleBar, "green", "red");
-
-    gameOver(financeBar, 0, winLoseObject.financeToLow)
-    gameOver(financeBar, 100, winLoseObject.financeToHight)
-    gameOver(moraleBar, 0, winLoseObject.moraleToLow)
-    gameOver(moraleBar, 100, winLoseObject.moraleToHight)
-    gameOver(researchBar, 0, winLoseObject.progressToLow)
-    gameOver(researchBar, 100, winLoseObject.progressToHight)
+    questionToPlayer.textContent = result[1];
+    setBarsAndGameOver();
 });
 
 noBtn.addEventListener('click', () => {
@@ -310,6 +311,11 @@ noBtn.addEventListener('click', () => {
     changeBar(moraleBar, result[6]);
     changeBar(researchBar, result[7]);
 
+    questionToPlayer.textContent = result[1];
+    setBarsAndGameOver();
+});
+
+function setBarsAndGameOver() {
     lowerRiskBar(financeBar, "gold", "red");
     lowerRiskBar(moraleBar, "green", "red");
     lowerRiskBar(researchBar, "blue", "red");
@@ -317,10 +323,18 @@ noBtn.addEventListener('click', () => {
     hightRiskBar(financeBar, "gold", "red");
     hightRiskBar(moraleBar, "green", "red");
 
-    gameOver(financeBar, 0, winLoseObject.financeToLow)
-    gameOver(financeBar, 100, winLoseObject.financeToHight)
-    gameOver(moraleBar, 0, winLoseObject.moraleToLow)
-    gameOver(moraleBar, 100, winLoseObject.moraleToHight)
-    gameOver(researchBar, 0, winLoseObject.progressToLow)
-    gameOver(researchBar, 100, winLoseObject.progressToHight)
-});
+    // gameOver(financeBar, 0, winLoseObject.financeToLow);
+    // gameOver(financeBar, 100, winLoseObject.financeToHight);
+    // gameOver(moraleBar, 0, winLoseObject.moraleToLow);
+    // gameOver(moraleBar, 100, winLoseObject.moraleToHight);
+
+    // gameOver(researchBar, 0, winLoseObject.progressToLow);
+    // gameOver(researchBar, 100, winLoseObject.progressToHight);
+
+    gameOver2(financeBar, winLoseObject.financeToLow, winLoseObject.financeToHight);
+    gameOver2(moraleBar, winLoseObject.moraleToLow, winLoseObject.moraleToHight);
+    gameOver2(researchBar, winLoseObject.progressToLow, winLoseObject.progressToHight);
+
+}
+
+
