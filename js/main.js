@@ -247,14 +247,13 @@ const randomTable = () => {
 }
 
 function changeBar(htmlObject, result) {
-    htmlObject.value = htmlObject.value + (result)
+    htmlObject.value += result
 }
 
 function lowerRiskBar(htmlObject, baseColor, riskColor) {
     if (htmlObject.value < 20) {
         htmlObject.classList.remove(`${baseColor}`);
         htmlObject.classList.add(`${riskColor}`);
-        console.log(htmlObject.value)
     } else {
         htmlObject.classList.remove(`${riskColor}`);
         htmlObject.classList.add(`${baseColor}`);
@@ -292,7 +291,7 @@ yesBtn.addEventListener('click', () => {
 
     const result = randomTable();
 
-    changeBar(financeBar, result[2]['finance']['yes']);
+    changeBar(financeBar, result[2]["finance"]["yes"]);
     changeBar(moraleBar, result[2]["morale"]["yes"]);
     changeBar(researchBar, result[2]["progres"]["yes"]);
 
