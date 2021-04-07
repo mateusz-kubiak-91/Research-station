@@ -225,17 +225,25 @@ const randomTable = () => {
     const { table, npc } = randomChoise;
     const randomSituation = table[Math.floor(Math.random() * table.length)];
     const question = randomSituation.context;
-    const financeYes = randomSituation.financeYes;
-    const moraleYes = randomSituation.moraleYes;
-    const progresYes = randomSituation.progresYes;
-    const financeNo = randomSituation.financeNo;
-    const moraleNo = randomSituation.moraleNo;
-    const progresNo = randomSituation.progresNo;
+    let randomTableMap = {
+      finance: {
+        yes: randomSituation.financeYes,
+        no: randomSituation.financeNo
+      },
+      morale: {
+        yes: randomSituation.moraleYes,
+        no: randomSituation.moraleNo
+      },
+      progres: {
+        yes: randomSituation.progresYes,
+        no: randomSituation.progresNo
+      }
+    };
 
     pictureNPC.textContent = npc;
     questionToPlayer.textContent = question;
 
-    return [npc, question, financeYes, moraleYes, progresYes, financeNo, moraleNo, progresNo];
+    return [npc, question, randomTableMap];
 }
 
 function changeBar(htmlObject, result) {
@@ -243,9 +251,10 @@ function changeBar(htmlObject, result) {
 }
 
 function lowerRiskBar(htmlObject, baseColor, riskColor) {
-    if (htmlObject.value <= 20) {
+    if (htmlObject.value < 20) {
         htmlObject.classList.remove(`${baseColor}`);
         htmlObject.classList.add(`${riskColor}`);
+        console.log(htmlObject.value)
     } else {
         htmlObject.classList.remove(`${riskColor}`);
         htmlObject.classList.add(`${baseColor}`);
@@ -262,17 +271,7 @@ function hightRiskBar(htmlObject, baseColor, riskColor) {
     }
 }
 
-function gameOver(valueBar, value, message) {
-    
-    if (valueBar.value <= value) {
-        console.log('1. valueBar.value: ' + valueBar.value + ' limit: ' + value + 'setting msg: ' + message);
-        questionToPlayer.textContent = message;
-    } else if (valueBar.value >= value) {
-        questionToPlayer.textContent = message;
-    }
-}
-
-function gameOver2({value}, messageLow, messageHigh) {
+function gameOver({value}, messageLow, messageHigh) {
     if (value <= 0) {
         questionToPlayer.textContent = messageLow;
     }
@@ -293,11 +292,9 @@ yesBtn.addEventListener('click', () => {
 
     const result = randomTable();
 
-    
-
-    changeBar(financeBar, result[2]);
-    changeBar(moraleBar, result[3]);
-    changeBar(researchBar, result[4]);
+    changeBar(financeBar, result[2]['finance']['yes']);
+    changeBar(moraleBar, result[2]["morale"]["yes"]);
+    changeBar(researchBar, result[2]["progres"]["yes"]);
 
     questionToPlayer.textContent = result[1];
     setBarsAndGameOver();
@@ -307,34 +304,26 @@ noBtn.addEventListener('click', () => {
 
     const result = randomTable();
 
-    changeBar(financeBar, result[5]);
-    changeBar(moraleBar, result[6]);
-    changeBar(researchBar, result[7]);
+    changeBar(financeBar, result[2]["finance"]["no"]);
+    changeBar(moraleBar, result[2]["morale"]["no"]);
+    changeBar(researchBar, result[2]["progres"]["no"]);
 
     questionToPlayer.textContent = result[1];
     setBarsAndGameOver();
 });
 
 function setBarsAndGameOver() {
-    lowerRiskBar(financeBar, "gold", "red");
-    lowerRiskBar(moraleBar, "green", "red");
-    lowerRiskBar(researchBar, "blue", "red");
+    lowerRiskBar(financeBar, "progressGold", "progressRed");
+    lowerRiskBar(moraleBar, "progressGreen", "progressRed");
+    lowerRiskBar(researchBar, "progressBlue", "progressRed");
 
-    hightRiskBar(financeBar, "gold", "red");
-    hightRiskBar(moraleBar, "green", "red");
+    hightRiskBar(financeBar, "progressGold", "progressRed");
+    hightRiskBar(moraleBar, "progressGreen", "progressRed");
 
-    // gameOver(financeBar, 0, winLoseObject.financeToLow);
-    // gameOver(financeBar, 100, winLoseObject.financeToHight);
-    // gameOver(moraleBar, 0, winLoseObject.moraleToLow);
-    // gameOver(moraleBar, 100, winLoseObject.moraleToHight);
-
-    // gameOver(researchBar, 0, winLoseObject.progressToLow);
-    // gameOver(researchBar, 100, winLoseObject.progressToHight);
-
-    gameOver2(financeBar, winLoseObject.financeToLow, winLoseObject.financeToHight);
-    gameOver2(moraleBar, winLoseObject.moraleToLow, winLoseObject.moraleToHight);
-    gameOver2(researchBar, winLoseObject.progressToLow, winLoseObject.progressToHight);
-
+    gameOver(financeBar, winLoseObject.financeToLow, winLoseObject.financeToHight);
+    gameOver(moraleBar, winLoseObject.moraleToLow, winLoseObject.moraleToHight);
+    gameOver(researchBar, winLoseObject.progressToLow, winLoseObject.progressToHight);
 }
+
 
 
