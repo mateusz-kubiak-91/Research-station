@@ -180,9 +180,6 @@ progress {
 .blue {
     color: #1f76bd;
 }
-.red {
-    color: #fd0000;
-}
 
 .picture {
     grid-column: 1/span 3;
