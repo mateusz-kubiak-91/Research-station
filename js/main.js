@@ -251,22 +251,25 @@ function changeBar(htmlObject, result) {
 }
 
 function lowerRiskBar(htmlObject, baseColor, riskColor) {
-    if (htmlObject.value < 20) {
-        htmlObject.classList.remove(`${baseColor}`);
-        htmlObject.classList.add(`${riskColor}`);
+    console.log(`${htmlObject.value}"a"`);
+    if (htmlObject.value <= 40) {
+        htmlObject.classList.add(riskColor);
+        htmlObject.classList.remove(baseColor);
+        console.log(`${htmlObject.value}"b"`);
     } else {
-        htmlObject.classList.remove(`${riskColor}`);
-        htmlObject.classList.add(`${baseColor}`);
+        htmlObject.classList.add(baseColor);
+        htmlObject.classList.remove(riskColor);
+        console.log(`${htmlObject.value}"c"`);
     }
 }
 
 function hightRiskBar(htmlObject, baseColor, riskColor) {
     if (htmlObject.value >= 80) {
-        htmlObject.classList.remove(`${baseColor}`);
-        htmlObject.classList.add(`${riskColor}`);
+        htmlObject.classList.remove(baseColor);
+        htmlObject.classList.add(riskColor);
     } else {
-        htmlObject.classList.remove(`${riskColor}`);
-        htmlObject.classList.add(`${baseColor}`);
+        htmlObject.classList.remove(riskColor);
+        htmlObject.classList.add(baseColor);
     }
 }
 

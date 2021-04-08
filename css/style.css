@@ -140,7 +140,7 @@ progress {
 }
 
 .progressGold, .progressGreen, .progressBlue, .progressRed {
-    background:#2e2030;
+    background:#522558;
 }
 
 .progressGold::-webkit-progress-value {
