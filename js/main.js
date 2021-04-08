@@ -250,28 +250,14 @@ function changeBar(htmlObject, result) {
     htmlObject.value += result
 }
 
-function lowerRiskBar(htmlObject, baseColor, riskColor) {
-    if (htmlObject.value <= 20) {
-        // htmlObject.classList.add(riskColor);
-        // htmlObject.classList.remove(baseColor);
-        htmlObject.classList.replace(`${baseColor}`, `${riskColor}`);
-    } else {
-        // htmlObject.classList.add(baseColor);
-        // htmlObject.classList.remove(riskColor);
-        htmlObject.classList.replace(`${riskColor}`, `${baseColor}`);
-    }
-}
-
-function hightRiskBar(htmlObject, baseColor, riskColor) {
-    if (htmlObject.value >= 80) {
-        // htmlObject.classList.remove(baseColor);
-        // htmlObject.classList.add(riskColor);
-        htmlObject.classList.replace(`${baseColor}`, `${riskColor}`);
-    } else {
-        // htmlObject.classList.remove(riskColor);
-        // htmlObject.classList.add(baseColor);
-        htmlObject.classList.replace(`${riskColor}`, `${baseColor}`);
-    }
+function RiskBar(htmlObject, baseColor, riskColor, nowMorale) {
+  if (htmlObject.value <= 20 || (htmlObject.value >= 80 && !nowMorale)) {
+    htmlObject.classList.remove(baseColor);
+    htmlObject.classList.add(riskColor);
+  } else {
+    htmlObject.classList.remove(riskColor);
+    htmlObject.classList.add(baseColor);
+  }
 }
 
 function gameOver({value}, messageLow, messageHigh) {
@@ -316,17 +302,11 @@ noBtn.addEventListener('click', () => {
 });
 
 function setBarsAndGameOver() {
-    lowerRiskBar(financeBar, "progressGold", "progressRed");
-    lowerRiskBar(moraleBar, "progressGreen", "progressRed");
-    lowerRiskBar(researchBar, "progressBlue", "progressRed");
-
-    hightRiskBar(financeBar, "progressGold", "progressRed");
-    hightRiskBar(moraleBar, "progressGreen", "progressRed");
+    RiskBar(financeBar, "progressGold", "progressRed", false);
+    RiskBar(moraleBar, "progressGreen", "progressRed", false);
+    RiskBar(researchBar, "progressBlue", "progressRed", true);
 
     gameOver(financeBar, winLoseObject.financeToLow, winLoseObject.financeToHight);
     gameOver(moraleBar, winLoseObject.moraleToLow, winLoseObject.moraleToHight);
     gameOver(researchBar, winLoseObject.progressToLow, winLoseObject.progressToHight);
 }
-
-
-
