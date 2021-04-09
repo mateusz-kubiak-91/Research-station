@@ -4,11 +4,13 @@ const startBtn = document.querySelector('.startBtn');
 const pictureNPC = document.querySelector('.pictureNPC');
 const questionToPlayer = document.querySelector('.questionToPlayer');
 
-let welcomDisplay = document.querySelector('div.welcome')
-let containerDisplay = document.querySelector('div.container')
-let financeBar = document.querySelector('.financeBar');
-let moraleBar = document.querySelector('.moraleBar');
-let researchBar = document.querySelector('.researchBar');
+const welcomDisplay = document.querySelector("div.welcome");
+const containerDisplay = document.querySelector("div.container");
+const repeatBtnDisplay = document.querySelector(".repeatBtn");
+
+const financeBar = document.querySelector(".financeBar");
+const moraleBar = document.querySelector(".moraleBar");
+const researchBar = document.querySelector(".researchBar");
 
 const npcTable = [{
         npc: "Lider Naukowców",
@@ -269,13 +271,38 @@ function gameOver({value}, messageLow, messageHigh) {
     }
 }
 
-// startBtn.addEventListener('click', () => {
-//     welcomDisplay.style.display = 'none'
-//     containerDisplay.style.display = 'grid'
-//     const result = randomTable()
-//     pictureNPC.textContent = result[0];
-//     questionToPlayer.textContent = result[1];
-// });
+function setBarsAndGameOver() {
+  RiskBar(financeBar, "progressGold", "progressRed", false);
+  RiskBar(moraleBar, "progressGreen", "progressRed", false);
+  RiskBar(researchBar, "progressBlue", "progressRed", true);
+
+  gameOver(financeBar,winLoseObject.financeToLow,winLoseObject.financeToHight);
+  gameOver(moraleBar, winLoseObject.moraleToLow, winLoseObject.moraleToHight);
+  gameOver(researchBar,winLoseObject.progressToLow,winLoseObject.progressToHight);
+}
+
+function winOrRepeat(htmlObject) {
+    if(htmlObject.value <= 0 || htmlObject.value >= 100 && htmlObject != researchBar) {
+        pictureNPC.textContent = "Przegrałeś! Jeszcze raz?";
+        repeatBtnDisplay.style.display = 'inline';
+        yesBtn.style.display = 'none';
+        noBtn.style.display = "none";
+    } 
+    if (htmlObject.value >= 100 && htmlObject == researchBar) {
+        pictureNPC.textContent = "Wygrałeś! Jeszcze raz?";
+        repeatBtnDisplay.style.display = 'inline';
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+    }
+}
+
+startBtn.addEventListener('click', () => {
+    welcomDisplay.style.display = 'none'
+    containerDisplay.style.display = 'grid'
+    const result = randomTable()
+    pictureNPC.textContent = result[0];
+    questionToPlayer.textContent = result[1];
+});
 
 yesBtn.addEventListener('click', () => {
 
@@ -287,6 +314,9 @@ yesBtn.addEventListener('click', () => {
 
     questionToPlayer.textContent = result[1];
     setBarsAndGameOver();
+    winOrRepeat(financeBar);
+    winOrRepeat(moraleBar);
+    winOrRepeat(researchBar);
 });
 
 noBtn.addEventListener('click', () => {
@@ -299,14 +329,21 @@ noBtn.addEventListener('click', () => {
 
     questionToPlayer.textContent = result[1];
     setBarsAndGameOver();
+    winOrRepeat(financeBar);
+    winOrRepeat(moraleBar);
+    winOrRepeat(researchBar);
 });
 
-function setBarsAndGameOver() {
+repeatBtnDisplay.addEventListener('click', () => {
+    financeBar.value = '50'
+    moraleBar.value = "50";
+    researchBar.value = "30";
+    repeatBtnDisplay.style.display = 'none';
+    yesBtn.style.display = "inline";
+    noBtn.style.display = "inline";
+    
+    randomTable();
     RiskBar(financeBar, "progressGold", "progressRed", false);
     RiskBar(moraleBar, "progressGreen", "progressRed", false);
     RiskBar(researchBar, "progressBlue", "progressRed", true);
-
-    gameOver(financeBar, winLoseObject.financeToLow, winLoseObject.financeToHight);
-    gameOver(moraleBar, winLoseObject.moraleToLow, winLoseObject.moraleToHight);
-    gameOver(researchBar, winLoseObject.progressToLow, winLoseObject.progressToHight);
-}
+});
