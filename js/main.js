@@ -5,7 +5,7 @@ const pictureNPC = document.querySelector('.pictureNPC');
 const questionToPlayer = document.querySelector('.questionToPlayer');
 
 const welcomDisplay = document.querySelector("div.welcome");
-const containerDisplay = document.querySelector("div.container");
+const containerDisplay = document.querySelector("div.game");
 const repeatBtnDisplay = document.querySelector(".repeatBtn");
 
 const financeBar = document.querySelector(".financeBar");
@@ -283,13 +283,13 @@ function setBarsAndGameOver() {
 
 function winOrRepeat(htmlObject) {
     if(htmlObject.value <= 0 || htmlObject.value >= 100 && htmlObject != researchBar) {
-        pictureNPC.textContent = "Przegrałeś! Jeszcze raz?";
+        pictureNPC.textContent = "Przegrałeś!";
         repeatBtnDisplay.style.display = 'inline';
         yesBtn.style.display = 'none';
         noBtn.style.display = "none";
     } 
     if (htmlObject.value >= 100 && htmlObject == researchBar) {
-        pictureNPC.textContent = "Wygrałeś! Jeszcze raz?";
+        pictureNPC.textContent = "Wygrałeś!";
         repeatBtnDisplay.style.display = 'inline';
         yesBtn.style.display = "none";
         noBtn.style.display = "none";

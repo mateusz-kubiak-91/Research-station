@@ -5,18 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Station - Deciders</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/edc645413f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="welcome">
-        <p class="wlcomeParagraf">O, nowy<br> Zostałeś zatrudniony jako lider projektu<br> Pracujemy nad niebezbieczną technologią<br> Doprowadź projekt do końca<br> Powodzenia, a i jeszcze jedno ...<br> Witamy na naszej stacji badawczej<br> </p>
-        <button class="startBtn">Rozpocznij...</button>
+    <div class="container welcome">
+        <div class="row">
+            <div class="twelve columns">
+                <div class="wlcomeParagraf">
+                    <p>Zostałeś zatrudniony jako lider projektu</p> 
+                    <p>Pracujemy nad niebezbieczną technologią</p>
+                    <p>Doprowadź projekt do końca</p>
+                    <p>Powodzenia, a i jeszcze jedno ...</p>
+                    <p>Witamy na naszej stacji badawczej</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="twelve columns">
+                <button class="button-start startBtn">Rozpocznij</button>
+            </div>
+        </div>
     </div>
-
-    <div class="container">
-        <div class="game">
+    <div class="container game">
+        <div class="row">
             <div class="box frame">
                 <div class="box statisticsBar">
                     <p class="progressBarTittle">Finanse <i class="fas fa-dollar-sign gold"></i> </p>
@@ -28,15 +43,15 @@
                 </div>
                 <div class="box picture">
                     <p class="pictureNPC">kiedyś tutaj będą wyświetlane obrazy postaci ... </p>
-                    <button class="repeatBtn">Powtórz</button>
+                    <button class="repeatBtn button-repeat">Powtórz</button>
                 </div>
                 <div class="box questionBar">
                     <p class="questionToPlayer"></p>
                 </div>
             </div>
             <div class="choise">
-                <div class="choiseYes"><button class="yesBtn">Tak</button></div>
-                <div class="choiseNo"><button class="noBtn">Nie</button></div>
+                <div class="choiseYes"><button class="yesBtn button-yes">Tak</button></div>
+                <div class="choiseNo"><button class="noBtn button-no">Nie</button></div>
             </div>
         </div>
     </div>
